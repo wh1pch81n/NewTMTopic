@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F6FC27A1A184688005C29C8 /* DummyFirstLevelXML.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7F6FC2791A184688005C29C8 /* DummyFirstLevelXML.xml */; };
 		7FA7CA051A10153500DEE3E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA041A10153500DEE3E0 /* AppDelegate.swift */; };
 		7FA7CA071A10153500DEE3E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA061A10153500DEE3E0 /* ViewController.swift */; };
 		7FA7CA0A1A10153500DEE3E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA081A10153500DEE3E0 /* Main.storyboard */; };
 		7FA7CA0C1A10153500DEE3E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0B1A10153500DEE3E0 /* Images.xcassets */; };
 		7FA7CA0F1A10153500DEE3E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0D1A10153500DEE3E0 /* LaunchScreen.xib */; };
-		7FA7CA1B1A10153500DEE3E0 /* TMTopicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA1A1A10153500DEE3E0 /* TMTopicTests.swift */; };
+		7FA7CA261A10186500DEE3E0 /* TMNetworkInterfaceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */; };
+		7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */; };
+		7FA7CA2A1A102EEC00DEE3E0 /* TMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F6FC2791A184688005C29C8 /* DummyFirstLevelXML.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DummyFirstLevelXML.xml; sourceTree = "<group>"; };
 		7FA7C9FF1A10153500DEE3E0 /* TMTopic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMTopic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA7CA031A10153500DEE3E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FA7CA041A10153500DEE3E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,7 +39,9 @@
 		7FA7CA0E1A10153500DEE3E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7FA7CA141A10153500DEE3E0 /* TMTopicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMTopicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA7CA191A10153500DEE3E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7FA7CA1A1A10153500DEE3E0 /* TMTopicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTopicTests.swift; sourceTree = "<group>"; };
+		7FA7CA241A10186400DEE3E0 /* TMTopicTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TMTopicTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterfaceTest.swift; sourceTree = "<group>"; };
+		7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F6FC2781A184650005C29C8 /* DummyFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7F6FC2791A184688005C29C8 /* DummyFirstLevelXML.xml */,
+			);
+			name = DummyFiles;
+			sourceTree = "<group>";
+		};
 		7FA7C9F61A10153500DEE3E0 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +91,7 @@
 		7FA7CA011A10153500DEE3E0 /* TMTopic */ = {
 			isa = PBXGroup;
 			children = (
+				7FA7CA271A1018C000DEE3E0 /* Network */,
 				7FA7CA041A10153500DEE3E0 /* AppDelegate.swift */,
 				7FA7CA061A10153500DEE3E0 /* ViewController.swift */,
 				7FA7CA081A10153500DEE3E0 /* Main.storyboard */,
@@ -98,8 +113,10 @@
 		7FA7CA171A10153500DEE3E0 /* TMTopicTests */ = {
 			isa = PBXGroup;
 			children = (
-				7FA7CA1A1A10153500DEE3E0 /* TMTopicTests.swift */,
+				7F6FC2781A184650005C29C8 /* DummyFiles */,
 				7FA7CA181A10153500DEE3E0 /* Supporting Files */,
+				7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */,
+				7FA7CA241A10186400DEE3E0 /* TMTopicTests-Bridging-Header.h */,
 			);
 			path = TMTopicTests;
 			sourceTree = "<group>";
@@ -110,6 +127,14 @@
 				7FA7CA191A10153500DEE3E0 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7FA7CA271A1018C000DEE3E0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F6FC27A1A184688005C29C8 /* DummyFirstLevelXML.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */,
 				7FA7CA071A10153500DEE3E0 /* ViewController.swift in Sources */,
 				7FA7CA051A10153500DEE3E0 /* AppDelegate.swift in Sources */,
 			);
@@ -221,7 +248,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA7CA1B1A10153500DEE3E0 /* TMTopicTests.swift in Sources */,
+				7FA7CA261A10186500DEE3E0 /* TMNetworkInterfaceTest.swift in Sources */,
+				7FA7CA2A1A102EEC00DEE3E0 /* TMNetworkInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +384,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -367,6 +396,8 @@
 				INFOPLIST_FILE = TMTopicTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TMTopicTests/TMTopicTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TMTopic.app/TMTopic";
 			};
 			name = Debug;
@@ -375,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -382,6 +414,7 @@
 				INFOPLIST_FILE = TMTopicTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TMTopicTests/TMTopicTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TMTopic.app/TMTopic";
 			};
 			name = Release;
@@ -405,6 +438,7 @@
 				7FA7CA201A10153500DEE3E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7FA7CA211A10153500DEE3E0 /* Build configuration list for PBXNativeTarget "TMTopicTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +447,7 @@
 				7FA7CA231A10153500DEE3E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
