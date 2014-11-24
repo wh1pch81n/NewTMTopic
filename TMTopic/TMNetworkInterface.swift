@@ -20,13 +20,16 @@ private let kFirstLevelXMLBatch = "";
 public let TMNetworkInterfaceDidFetchNotification = "TMNetworkInterfaceDidFetchNotification"
 
 class TMNetworkInterface : NSObject, NSXMLParserDelegate {
-  var delegate : TMNetworkInterfaceDelegate?
+  //var delegate : TMNetworkInterfaceDelegate?
   var currentSession : NSURLSession = NSURLSession.sharedSession()
   var currentNotificationCenter : NSNotificationCenter = NSNotificationCenter.defaultCenter()
   //var firstLevelXMLData : NSData?
-  var firstLevelXMLDict, tempFirstLevelXMLDict : Dictionary<String, NSURL>?
-  var secondLevelXMLDict, tempSecondLevelXMLDict : Dictionary<String, Dictionary<String, String>>?
-  var tempTopicHolder : Dictionary<String, String>?
+  var firstLevelParser : NSXMLParser?
+  var firstLevelXMLArray, tempFirstLevelXMLArray : Array<Dictionary<String, String>>?
+  var secondLevelParser : NSXMLParser?
+  var secondLevelXMLDict, tempSecondLevelXMLDict : Dictionary<String, Array<Dictionary<String, String>>>?
+  var tempTopicHolderArray : Array<Dictionary<String, String>>?
+  var tempTopicHolder = Dictionary<String, String>()
   
   class var sharedInstance : TMNetworkInterface {
     struct Static {
@@ -35,53 +38,63 @@ class TMNetworkInterface : NSObject, NSXMLParserDelegate {
     return Static._instance
   }
   
-  func fetchFirstLevelXMLBatch (completionHandler: (TMNetwork) -> ()) {
+  func fetchFirstLevelXMLBatch (fetchDone: (TMNetwork, Array<Dictionary<String, String>>?) -> Void) {
     let url : NSURL = NSURL(string: kFirstLevelXMLBatch)!
     let urlRequest = NSURLRequest(URL: url)
+    self.tempFirstLevelXMLArray = Array<Dictionary<String, String>>()
     
     self.currentSession.dataTaskWithRequest(urlRequest,
       completionHandler: { (data : NSData!, response : NSURLResponse!, error : NSError!) -> Void in
         if (error != nil) || (data == nil) {
           //data error
-          completionHandler(TMNetwork.fetchError)
+          fetchDone(TMNetwork.fetchError, nil)
           return;
         }
-        //self.firstLevelXMLData = data
         var xmlparser = NSXMLParser(data: data)
+        self.firstLevelParser = xmlparser
         xmlparser.delegate = self
         if xmlparser.parse() == false {
-          self.firstLevelXMLDict = nil
-          completionHandler(TMNetwork.processError)
+          self.firstLevelXMLArray = nil
+          fetchDone(TMNetwork.processError, nil)
           return
         }
-        self.firstLevelXMLDict = self.tempFirstLevelXMLDict
-        completionHandler(TMNetwork.fetchSuccessful)
+        self.firstLevelXMLArray = self.tempFirstLevelXMLArray
+        fetchDone(TMNetwork.fetchSuccessful, self.firstLevelXMLArray)
     }).resume()
   }
   
-  func fetchSecondLevelXMLTopic(completionHandler: (TMNetwork) -> ()) {
-    if let flxd = firstLevelXMLDict {
-      for (key,url) in flxd {
-        let urlRequest = NSURLRequest(URL: url)
-        self.currentSession.dataTaskWithRequest(urlRequest, completionHandler: { (data : NSData!, response : NSURLResponse!, error : NSError!) -> Void in
-          if (error != nil) || (data == nil) {
-            completionHandler(TMNetwork.fetchError)
-            return
-          }
-          var xmlParser = NSXMLParser(data: data)
-          xmlParser.delegate = self
-          if xmlParser.parse() == false {
-            self.secondLevelXMLDict?.removeValueForKey(key)
-            completionHandler(TMNetwork.processError)
-            return;
-          }
-          self.secondLevelXMLDict?.updateValue(tempTopicHolder, forKey: key)
-          completionHandler(TMNetwork.fetchSuccessful)
-        }).resume()
+  /*Fetches all data from particular from batch XML*/
+  func fetchSecondLevelXMLTopic(fetchDone: (TMNetwork, Dictionary<String, Array<Dictionary<String, String>>>?) -> Void) {
+    if let flxa = firstLevelXMLArray {
+      self.tempSecondLevelXMLDict = Dictionary<String, Array<Dictionary<String, String>>>()
+      var numBatches : Int = flxa.count
+      for batch in flxa {
+        self.tempTopicHolderArray = Array<Dictionary<String, String>>()
+        if let url = batch["url"] {
+          let urlRequest = NSURLRequest(URL: NSURL(string: url)!)
+          self.currentSession.dataTaskWithRequest(urlRequest, completionHandler: { (data : NSData!, response : NSURLResponse!, error : NSError!) -> Void in
+            numBatches--
+            if (error != nil) || (data == nil) {
+              fetchDone(TMNetwork.fetchError, nil)
+            } else {
+              var xmlParser = NSXMLParser(data: data)
+              self.secondLevelParser = xmlParser
+              xmlParser.delegate = self
+              if xmlParser.parse() == false {
+                fetchDone(TMNetwork.processError, nil)
+              } else {
+                self.tempSecondLevelXMLDict?.updateValue(self.tempTopicHolderArray!, forKey: batch["date"]!)
+              }
+            }
+            if numBatches == 0 {
+              self.secondLevelXMLDict = self.tempSecondLevelXMLDict
+              fetchDone(TMNetwork.fetchSuccessful, self.secondLevelXMLDict)
+            }
+          }).resume()
+        }
       }
-      completionHandler(TMNetwork.fetchSuccessful)
     } else {
-      completionHandler(TMNetwork.fetchUnknown)
+      fetchDone(TMNetwork.fetchUnknown, nil)
     }
   }
   
@@ -89,40 +102,60 @@ class TMNetworkInterface : NSObject, NSXMLParserDelegate {
   
   //MARK: - NSXMLparserDelegate
   func parserDidStartDocument(parser: NSXMLParser!) {
-    self.tempFirstLevelXMLDict = Dictionary<String, NSURL>()
+    
   }
+  
   func parser(parser: NSXMLParser!, didStartElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!, attributes attributeDict: [NSObject : AnyObject]!) {
-    if elementName == "batch" {
-      var date : String = attributeDict["date"] as String
-      var url : NSURL = NSURL(string: attributeDict["url"] as String)!
-      self.tempFirstLevelXMLDict?.updateValue(url, forKey: date)
-    } else if elementName == "topic" {
-      tempTopicHolder?.removeAll(keepCapacity: true)
+    if (parser == self.firstLevelParser) && (elementName == "batch") {
+      var tempDict = Dictionary<String, String>()
+      if let date = attributeDict["date"] as? String {
+        tempDict.updateValue(date, forKey: "date")
+      }
+      if let url = attributeDict["url"] as? String {
+        tempDict.updateValue(url, forKey: "url")
+      }
+      self.tempFirstLevelXMLArray?.append(tempDict)
+    } else if (parser == self.secondLevelParser) && (elementName == "topic") {
+      tempTopicHolder.removeAll(keepCapacity: true)
       if let category = attributeDict["category"] as? String {
-        tempTopicHolder?.updateValue(category, forKey: "category")
+        tempTopicHolder.updateValue(category, forKey: "category")
       }
       if let intro = attributeDict["intro"] as? String {
-        tempTopicHolder?.updateValue(intro, forKey: "intro")
+        tempTopicHolder.updateValue(intro, forKey: "intro")
       }
       if let min = attributeDict["min"] as? String {
-        tempTopicHolder?.updateValue(min, forKey: "min")
+        tempTopicHolder.updateValue(min, forKey: "min")
       }
       if let max = attributeDict["max"] as? String {
-        tempTopicHolder?.updateValue(max, forKey: "max")
+        tempTopicHolder.updateValue(max, forKey: "max")
       }
       if let source = attributeDict["source"] as? String {
-        tempTopicHolder?.updateValue(source, forKey: "source")
+        tempTopicHolder.updateValue(source, forKey: "source")
       }
     }
   }
+  
   func parser(parser: NSXMLParser!, foundCharacters string: String!) {
-    tempTopicHolder?.updateValue(string, forKey: "question")
+    if parser == secondLevelParser {
+      tempTopicHolder.updateValue(string, forKey: "question")
+    }
   }
+  
   func parser(parser: NSXMLParser!, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!) {
-    tempSecondLevelXMLDict
+    if parser == secondLevelParser {
+      if self.tempTopicHolder.count > 0 {
+        self.tempTopicHolderArray?.append(self.tempTopicHolder)
+      }
+    }
   }
 }
 
-protocol TMNetworkInterfaceDelegate {
-  
-}
+//protocol TMNetworkInterfaceDelegate {
+//  func firstLevelXMLParseDidFail(state : TMNetwork)
+//  func firstLevelXMLParseDidSucceed(batches : Array<Dictionary<String, String>>?)
+//  func secondLevelXMLParseDidFail(state : TMNetwork)
+//  func secondLevelXMLParserDidSucceed(topics : Array<Dictionary<String, String>>?)
+//}
+
+
+//TODO: Not to self.  i feel like this data stuff is making me thing too much.  I dunno if it is because it is Swift and I hate the syntax or whatever but I dunno i feel like this is being too large of a road block.  However I think that for now you should just use what you have created thus far and move on to the next phase...which is to actually make the git hub repo specififcally for this.  Once you have done that create the main controller and try to display it.  Do not worry about persistent storage just yet...That will be for later .. get the fun stuff in and GO!

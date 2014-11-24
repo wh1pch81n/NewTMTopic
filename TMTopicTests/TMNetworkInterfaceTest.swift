@@ -9,8 +9,9 @@
 import UIKit
 import XCTest
 
-let kFakeNetworkDelaySeconds : UInt32 = 5;
+let kFakeNetworkDelaySeconds : UInt32 = 5
 let kDummyFirstLevelXMLPath = "DummyFirstLevelXML.xml"
+let kDummySecondLevelXMLPath = "DummySecondLevelXML1.xml"
 
 //MARK: test fetching
 class TMNetworkInterfaceDataRequestTest: XCTestCase {
@@ -49,7 +50,7 @@ class TMNetworkInterfaceDataRequestTest: XCTestCase {
     
     let networkInterface : TMNetworkInterface = TMNetworkInterface()
     networkInterface.currentSession = TestNSURLSession()
-    networkInterface.fetchFirstLevelXMLBatch({ (fetchResponse : TMNetwork) in
+    networkInterface.fetchFirstLevelXMLBatch({ (fetchResponse : TMNetwork, batches : Array<Dictionary<String, String>>?) in
       fetchStatus = fetchResponse
       fetchSomethingExpectation.fulfill()
     })
@@ -81,7 +82,7 @@ class TMNetworkInterfaceDataRequestTest: XCTestCase {
     
     let networkInterface = TMNetworkInterface()
     networkInterface.currentSession = TestNSURLSessionMock()
-    networkInterface.fetchFirstLevelXMLBatch({ (fetchResponse : TMNetwork) -> () in
+    networkInterface.fetchFirstLevelXMLBatch({ (fetchResponse : TMNetwork, batches : Array<Dictionary<String, String>>?) -> () in
       fetchStatus = fetchResponse
       fetchSomethingExpectation.fulfill()
     })
@@ -117,7 +118,7 @@ class TMNetworkInterfaceDataRequestTest: XCTestCase {
     
     var networkInterface = TMNetworkInterface()
     networkInterface.currentSession = TestNSURLSessionMock()
-    networkInterface.fetchFirstLevelXMLBatch { (fetchResponse : TMNetwork) -> () in
+    networkInterface.fetchFirstLevelXMLBatch { (fetchResponse : TMNetwork, batches : Array<Dictionary<String, String>>?) -> () in
       fetchStatus = fetchResponse
       fetchSomethingExpectation.fulfill()
     }
@@ -126,26 +127,22 @@ class TMNetworkInterfaceDataRequestTest: XCTestCase {
       switch fetchStatus {
       case .fetchSuccessful:
         XCTAssert(true)
-        //var data1 : NSData! = networkInterface.firstLevelXMLData
-        var data1 : NSData! = NSKeyedArchiver.archivedDataWithRootObject(networkInterface.firstLevelXMLDict!)
-        var data2 : NSData! = NSData.dataFrom(contentsOfFile: kDummyFirstLevelXMLPath, encoding: NSUTF8StringEncoding, bundle: self.bundle, error: nil)
-        XCTAssertEqual(data1, data2)
         let expected = [
-          "2014-11-15" : NSURL(string:"youare.com/a/wonderful/programmer"),
-          "2014-10-1" : NSURL(string:"www.cool.com/i/love/you"),
-          "2014-09-1" : NSURL(string:"http://www.awesome.com"),
-          "2014-08-1" : NSURL(string:"http://www.coolurl.com")
+          ["date" : "2014-11-15",
+            "url" : "youare.com/a/wonderful/programmer"],
+          ["date" : "2014-10-1",
+            "url" : "www.cool.com/i/love/you"],
+          ["date" : "2014-09-1",
+            "url" :  "http://www.awesome.com"],
+          ["date" : "2014-08-1",
+            "url" : "http://www.coolurl.com"]
         ]
-        let actual = networkInterface.firstLevelXMLDict!
+        let actual = networkInterface.firstLevelXMLArray!
         
-        for key in expected.keys {
-          if let url : NSURL = actual[key] {
-            var actualURL : NSURL! = actual[key]
-            var expectedURL : NSURL! = expected[key]!
-            XCTAssertEqual(actualURL, expectedURL)
-            continue
-          }
-          XCTFail()
+        for var i = 0; i < expected.count; ++i {
+          var actualStr = actual[i]["date"] as String!
+          var expectedStr = expected[i]["date"] as String!
+          XCTAssertEqual(actualStr!, expectedStr!)
         }
       default:
         XCTFail()
@@ -154,7 +151,73 @@ class TMNetworkInterfaceDataRequestTest: XCTestCase {
   }
   
   func testReceivedSecondLevelXMLFromEachFirstLevelXML() {
+    var bundle = self.bundle
+    class TestNSURLSessionMock : NSURLSession {
+      private override func dataTaskWithRequest(request: NSURLRequest, completionHandler: ((NSData!, NSURLResponse!, NSError!) -> Void)?) -> NSURLSessionDataTask {
+        var dataMock : NSData! = NSData.dataFrom(
+          contentsOfFile: kDummySecondLevelXMLPath,
+          encoding: NSUTF8StringEncoding,
+          bundle: TMNetworkInterfaceDataRequestTest().bundle,
+          error: nil)
+        sleep(kFakeNetworkDelaySeconds)
+        completionHandler!(dataMock, NSURLResponse(), nil)
+        return NSURLSessionDataTask()
+      }
+    }
+    let fetchSomethingExpectation = expectationWithDescription("fetching dummy second level")
+    var fetchStatus : TMNetwork = .fetchUnknown
     
+    var networkInterface = TMNetworkInterface()
+    networkInterface.firstLevelXMLArray = [
+      ["date" : "2014-11-15",
+        "url" : "youare.com/a/wonderful/programmer"],
+      ["date" : "2014-10-1",
+        "url" : "www.cool.com/i/love/you"]
+    ]
+    
+    let expected = [
+      "2014-11-15" : [[
+        "category" : "Science",
+        "intro" : "There are questions that every child asks...",
+        "min" : "2",
+        "max" : "3",
+        "source" : "",
+        "question" : "Why is the sky blue?"
+        ], [
+          "question" : "What would make the world a happier place?"
+        ], [
+          "category" : "Wisdom",
+          "intro" : "A Guru is someone that offers wisdom.  A master is someone that knows a skill really well.  A mentor is someone that can offer you help based on their life experiences",
+          "question" : "Tell us of a time someone taught you something"
+        ]
+      ],
+      "2014-10-1" : [[
+        "category" : "Science",
+        "intro" : "There are questions that every child asks...",
+        "min" : "2",
+        "max" : "3",
+        "source" : "",
+        "question" : "Why is the sky blue?"
+        ], [
+          "question" : "What would make the world a happier place?"
+        ], [
+          "category" : "Wisdom",
+          "intro" : "A Guru is someone that offers wisdom.  A master is someone that knows a skill really well.  A mentor is someone that can offer you help based on their life experiences",
+          "question" : "Tell us of a time someone taught you something"
+        ]
+      ]
+    ]
+    
+    networkInterface.currentSession = TestNSURLSessionMock()
+    networkInterface.fetchSecondLevelXMLTopic { (fetchStatus : TMNetwork, topics : Dictionary<String, Array<Dictionary<String, String>>>?) -> Void in
+      fetchSomethingExpectation.fulfill()
+    }
+    
+    waitForExpectationsWithTimeout(NSTimeInterval(kFakeNetworkDelaySeconds * 2), handler: { (error : NSError!) -> Void in
+      // test for equivalence somehow
+      XCTAssert(true)
+    })
+
   }
   
   func testReceivedSecondLevelXMLWhenOnlyOneFirstLevelXMLIsNew() {
@@ -164,24 +227,6 @@ class TMNetworkInterfaceDataRequestTest: XCTestCase {
   func testReceivedNoSecondLevelXMLBecauseDeviceHasAllOfThemAlready() {
     
   }
-  //    //move this function to a data extension
-  //    func xmlStringContentsToData(filename: String) -> NSData? {
-  //        var data : NSData? = nil;
-  //        let bundle = NSBundle(forClass: TMNetworkInterfaceDataRequestTest.self)
-  //        let path = bundle.pathForResource(filename, ofType: nil)
-  //        var err : NSErrorPointer = nil;
-  //        if let content = String(
-  //            contentsOfFile: path!,
-  //            encoding: NSUTF8StringEncoding,
-  //            error: err) {
-  //                if let _data = content.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-  //                    data = _data
-  //                    return data
-  //                }
-  //        }
-  //        XCTFail("Could not read file")
-  //        return data
-  //    }
 }
 
 //MARK: notify all listeners of data
