@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>category</key>
+		<string>Science</string>
+		<key>intro</key>
+		<string>There are questions that every child asks...</string>
+		<key>min</key>
+		<integer>2</integer>
+		<key>max</key>
+		<integer>3</integer>
+		<key>source</key>
+		<string></string>
+		<key>question</key>
+		<string>Why is the sky blue?</string>
+	</dict>
+	<dict>
+		<key>category</key>
+		<string></string>
+		<key>intro</key>
+		<string></string>
+		<key>min</key>
+		<integer>0</integer>
+		<key>max</key>
+		<integer>0</integer>
+		<key>source</key>
+		<string></string>
+		<key>question</key>
+		<string>What would make the world a happier place?</string>
+	</dict>
+	<dict>
+		<key>category</key>
+		<string>Wisdom</string>
+		<key>intro</key>
+		<string>A Guru is someone that offers wisdom.
+A master is someone that knows a skill really well.
+A mentor is someone that can offer you help based on their life experiences.</string>
+		<key>min</key>
+		<integer>2</integer>
+		<key>max</key>
+		<integer>3</integer>
+		<key>source</key>
+		<string></string>
+		<key>question</key>
+		<string>Tell us of a time someone taught you something.</string>
+	</dict>
+</array>
+</plist>

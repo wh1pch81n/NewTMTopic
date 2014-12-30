@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>batchDate</key>
+		<string>2014-12-30</string>
+		<key>batchUrl</key>
+		<string>youare.com/a/wonderful/programmer</string>
+	</dict>
+	<dict>
+		<key>batchDate</key>
+		<string>2014-10-3</string>
+		<key>batchUrl</key>
+		<string>www.cool.com/i/love/you</string>
+	</dict>
+	<dict>
+		<key>batchDate</key>
+		<string>2014-09-1</string>
+		<key>batchUrl</key>
+		<string>http://www.awesome.com</string>
+	</dict>
+	<dict>
+		<key>batchDate</key>
+		<string>2014-08-1</string>
+		<key>batchUrl</key>
+		<string>http://www.coolurl.com</string>
+	</dict>
+</array>
+</plist>

@@ -13,10 +13,10 @@
 		7FA7CA0A1A10153500DEE3E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA081A10153500DEE3E0 /* Main.storyboard */; };
 		7FA7CA0C1A10153500DEE3E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0B1A10153500DEE3E0 /* Images.xcassets */; };
 		7FA7CA0F1A10153500DEE3E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0D1A10153500DEE3E0 /* LaunchScreen.xib */; };
-		7FA7CA261A10186500DEE3E0 /* TMNetworkInterfaceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */; };
 		7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */; };
-		7FA7CA2A1A102EEC00DEE3E0 /* TMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */; };
 		7FD7C2121A22987A00A62847 /* DummySecondLevelXML1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */; };
+		7FEB45491A532F420036B9C1 /* DummyFirstLevelPList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */; };
+		7FEB454B1A5330B60036B9C1 /* DummySecondLevelPList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FEB454A1A5330B60036B9C1 /* DummySecondLevelPList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +44,8 @@
 		7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterfaceTest.swift; sourceTree = "<group>"; };
 		7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterface.swift; sourceTree = "<group>"; };
 		7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DummySecondLevelXML1.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
+		7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DummyFirstLevelPList.plist; sourceTree = "<group>"; };
+		7FEB454A1A5330B60036B9C1 /* DummySecondLevelPList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DummySecondLevelPList.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,8 @@
 			children = (
 				7F6FC2791A184688005C29C8 /* DummyFirstLevelXML.xml */,
 				7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */,
+				7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */,
+				7FEB454A1A5330B60036B9C1 /* DummySecondLevelPList.plist */,
 			);
 			name = DummyFiles;
 			sourceTree = "<group>";
@@ -189,6 +193,7 @@
 				TargetAttributes = {
 					7FA7C9FE1A10153500DEE3E0 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = SX585CK9M9;
 					};
 					7FA7CA131A10153500DEE3E0 = {
 						CreatedOnToolsVersion = 6.1;
@@ -230,6 +235,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FEB45491A532F420036B9C1 /* DummyFirstLevelPList.plist in Resources */,
+				7FEB454B1A5330B60036B9C1 /* DummySecondLevelPList.plist in Resources */,
 				7FD7C2121A22987A00A62847 /* DummySecondLevelXML1.xml in Resources */,
 				7F6FC27A1A184688005C29C8 /* DummyFirstLevelXML.xml in Resources */,
 			);
@@ -252,8 +259,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA7CA261A10186500DEE3E0 /* TMNetworkInterfaceTest.swift in Sources */,
-				7FA7CA2A1A102EEC00DEE3E0 /* TMNetworkInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
