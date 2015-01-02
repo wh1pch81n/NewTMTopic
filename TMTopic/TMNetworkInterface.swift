@@ -23,19 +23,19 @@ class TMNetworkInterface : NSObject {
     
     func checkForUpdate() {
         self.urlSession.dataTaskWithURL(NSURL(string: _firstLevelBatchPListURL)!, completionHandler: { (data : NSData!, response: NSURLResponse!, error : NSError!) -> Void in
-            if (error != nil) {
+            if error != nil {
                 return
             }
-            var batch = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil)
-            if let b = batch as? NSArray {
+            var batch = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil) as? NSArray
+            if let b = batch {
                 for i in b {
                     var batchURL = i["batchUrl"] as NSString
                     self.urlSession.dataTaskWithURL(NSURL(string: batchURL)!, completionHandler: { (data, response, error) -> Void in
                         if error != nil {
                             return;
                         }
-                        var topics = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil)
-                        if let a = topics as? NSArray {
+                        var topics = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil) as? NSArray
+                        if let a = topics {
                             var d = NSMutableDictionary()
                             d["batchDate"] = i["batchDate"]
                             d["topics"] = a

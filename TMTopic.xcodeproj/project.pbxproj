@@ -15,8 +15,16 @@
 		7FA7CA0F1A10153500DEE3E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0D1A10153500DEE3E0 /* LaunchScreen.xib */; };
 		7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */; };
 		7FD7C2121A22987A00A62847 /* DummySecondLevelXML1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */; };
+		7FE68E571A54C27800869C53 /* TMTopicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE68E561A54C27800869C53 /* TMTopicTableViewController.swift */; };
 		7FEB45491A532F420036B9C1 /* DummyFirstLevelPList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */; };
 		7FEB454B1A5330B60036B9C1 /* DummySecondLevelPList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FEB454A1A5330B60036B9C1 /* DummySecondLevelPList.plist */; };
+		7FEB454E1A5375030036B9C1 /* StorageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB454D1A5375030036B9C1 /* StorageInterface.swift */; };
+		7FEB45511A5375330036B9C1 /* storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB454F1A5375330036B9C1 /* storage.xcdatamodeld */; };
+		7FEB455B1A537E180036B9C1 /* BatchTopics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB455A1A537E180036B9C1 /* BatchTopics.swift */; };
+		7FEB455D1A537E180036B9C1 /* BatchDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB455C1A537E180036B9C1 /* BatchDate.swift */; };
+		7FEB455F1A537E180036B9C1 /* TopicSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB455E1A537E180036B9C1 /* TopicSource.swift */; };
+		7FEB45611A537E190036B9C1 /* TopicCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEB45601A537E190036B9C1 /* TopicCategories.swift */; };
+		7FEB45651A5382040036B9C1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FEB45641A5382040036B9C1 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +52,17 @@
 		7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterfaceTest.swift; sourceTree = "<group>"; };
 		7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterface.swift; sourceTree = "<group>"; };
 		7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DummySecondLevelXML1.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
+		7FE68E561A54C27800869C53 /* TMTopicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMTopicTableViewController.swift; sourceTree = "<group>"; };
 		7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DummyFirstLevelPList.plist; sourceTree = "<group>"; };
 		7FEB454A1A5330B60036B9C1 /* DummySecondLevelPList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DummySecondLevelPList.plist; sourceTree = "<group>"; };
+		7FEB454D1A5375030036B9C1 /* StorageInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageInterface.swift; sourceTree = "<group>"; };
+		7FEB45501A5375330036B9C1 /* storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storage.xcdatamodel; sourceTree = "<group>"; };
+		7FEB455A1A537E180036B9C1 /* BatchTopics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchTopics.swift; sourceTree = "<group>"; };
+		7FEB455C1A537E180036B9C1 /* BatchDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchDate.swift; sourceTree = "<group>"; };
+		7FEB455E1A537E180036B9C1 /* TopicSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicSource.swift; sourceTree = "<group>"; };
+		7FEB45601A537E190036B9C1 /* TopicCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCategories.swift; sourceTree = "<group>"; };
+		7FEB45631A537EFC0036B9C1 /* TMTopic-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMTopic-Bridging-Header.h"; sourceTree = "<group>"; };
+		7FEB45641A5382040036B9C1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FEB45651A5382040036B9C1 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +98,7 @@
 		7FA7C9F61A10153500DEE3E0 = {
 			isa = PBXGroup;
 			children = (
+				7FEB45641A5382040036B9C1 /* CoreData.framework */,
 				7FA7CA011A10153500DEE3E0 /* TMTopic */,
 				7FA7CA171A10153500DEE3E0 /* TMTopicTests */,
 				7FA7CA001A10153500DEE3E0 /* Products */,
@@ -98,10 +117,12 @@
 		7FA7CA011A10153500DEE3E0 /* TMTopic */ = {
 			isa = PBXGroup;
 			children = (
+				7FEB454C1A53748D0036B9C1 /* Model */,
 				7FA7CA271A1018C000DEE3E0 /* Network */,
 				7FA7CA041A10153500DEE3E0 /* AppDelegate.swift */,
 				7FA7CA061A10153500DEE3E0 /* ViewController.swift */,
 				7FA7CA081A10153500DEE3E0 /* Main.storyboard */,
+				7FE68E561A54C27800869C53 /* TMTopicTableViewController.swift */,
 				7FA7CA0B1A10153500DEE3E0 /* Images.xcassets */,
 				7FA7CA0D1A10153500DEE3E0 /* LaunchScreen.xib */,
 				7FA7CA021A10153500DEE3E0 /* Supporting Files */,
@@ -142,6 +163,28 @@
 				7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */,
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		7FEB454C1A53748D0036B9C1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7FEB45621A537E360036B9C1 /* Core Data */,
+				7FEB454D1A5375030036B9C1 /* StorageInterface.swift */,
+				7FEB45631A537EFC0036B9C1 /* TMTopic-Bridging-Header.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		7FEB45621A537E360036B9C1 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7FEB45601A537E190036B9C1 /* TopicCategories.swift */,
+				7FEB455E1A537E180036B9C1 /* TopicSource.swift */,
+				7FEB455C1A537E180036B9C1 /* BatchDate.swift */,
+				7FEB455A1A537E180036B9C1 /* BatchTopics.swift */,
+				7FEB454F1A5375330036B9C1 /* storage.xcdatamodeld */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,9 +292,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FEB455D1A537E180036B9C1 /* BatchDate.swift in Sources */,
+				7FEB455B1A537E180036B9C1 /* BatchTopics.swift in Sources */,
 				7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */,
+				7FEB45611A537E190036B9C1 /* TopicCategories.swift in Sources */,
 				7FA7CA071A10153500DEE3E0 /* ViewController.swift in Sources */,
+				7FEB455F1A537E180036B9C1 /* TopicSource.swift in Sources */,
+				7FE68E571A54C27800869C53 /* TMTopicTableViewController.swift in Sources */,
 				7FA7CA051A10153500DEE3E0 /* AppDelegate.swift in Sources */,
+				7FEB45511A5375330036B9C1 /* storage.xcdatamodeld in Sources */,
+				7FEB454E1A5375030036B9C1 /* StorageInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,20 +422,27 @@
 		7FA7CA1F1A10153500DEE3E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = TMTopic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TMTopic/TMTopic-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		7FA7CA201A10153500DEE3E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = TMTopic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TMTopic/TMTopic-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -459,6 +516,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7FEB454F1A5375330036B9C1 /* storage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7FEB45501A5375330036B9C1 /* storage.xcdatamodel */,
+			);
+			currentVersion = 7FEB45501A5375330036B9C1 /* storage.xcdatamodel */;
+			path = storage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7FA7C9F71A10153500DEE3E0 /* Project object */;
 }
