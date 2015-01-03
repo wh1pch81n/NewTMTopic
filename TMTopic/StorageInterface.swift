@@ -69,13 +69,13 @@ class Storage : NSObject {
     }
     
     private func fetchCategoryName(name : String, context : NSManagedObjectContext) -> NSFetchedResultsController {
-        return fetchEntity((NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: false)),
+        return fetchEntity((NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true)),
             predicate: NSPredicate(format: "categories == %@", name),
             context: context);
     }
     
     private func fetchSourcePath(path : String, context : NSManagedObjectContext) -> NSFetchedResultsController {
-        return fetchEntity((NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: false)),
+        return fetchEntity((NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true)),
             predicate: NSPredicate(format: "source == %@", path),
             context: context);
     }

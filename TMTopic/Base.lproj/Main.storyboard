@@ -59,12 +59,12 @@
                     <navigationItem key="navigationItem" id="bYw-qc-qJg">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" id="uQ9-a8-CRt">
-                            <rect key="frame" x="30" y="7" width="260" height="30"/>
+                            <rect key="frame" x="68" y="7" width="184" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
+                                <segment title="All"/>
                                 <segment title="Category"/>
                                 <segment title="Source"/>
-                                <segment title="Date Added"/>
                             </segments>
                             <connections>
                                 <action selector="tappedSegmentController:" destination="TAh-62-y6b" eventType="valueChanged" id="bei-6Y-TVf"/>
@@ -73,38 +73,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="segmentControl" destination="uQ9-a8-CRt" id="vP9-yI-21E"/>
-                        <segue destination="6Fj-gB-efW" kind="showDetail" id="Zo0-5x-XkY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0iP-YU-hzB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="213" y="360.5"/>
-        </scene>
-        <!--Table View Controller-->
-        <scene sceneID="7bZ-3d-Bhn">
-            <objects>
-                <tableViewController id="6Fj-gB-efW" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9XS-Kn-7DC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zhl-5P-BGm">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zhl-5P-BGm" id="Gxd-PX-wu4">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="6Fj-gB-efW" id="neM-L0-PTu"/>
-                            <outlet property="delegate" destination="6Fj-gB-efW" id="2V8-GM-Wmz"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OFW-HR-YSE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="755" y="356"/>
+            <point key="canvasLocation" x="256" y="361"/>
         </scene>
     </scenes>
 </document>

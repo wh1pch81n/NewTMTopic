@@ -9,10 +9,15 @@
 import UIKit
 import CoreData
 
+enum TMTopicFilter : Int {
+    case ByTopic = 0
+    case ByCategory = 1
+    case BySource = 2
+}
+
 class TMTopicMasterTableViewController: UITableViewController {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     private var currentFetchController : NSFetchedResultsController?
-    private var lastSegmentIndex : Int = 0
     private var tempContext : NSManagedObjectContext?
     
     override func viewDidLoad() {
@@ -28,7 +33,8 @@ class TMTopicMasterTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    @IBAction func tappedSegmentController(sender: AnyObject) {
+    @IBAction func tappedSegmentController(sender: AnyObject) {//TODO: Shouldn't this be value changed rather than touched?
+        self.currentFetchController = nil
         self.tableView.reloadData()
     }
     
@@ -36,36 +42,26 @@ class TMTopicMasterTableViewController: UITableViewController {
     
     func fetchTopics() -> NSFetchedResultsController {
         if let cfc = self.currentFetchController {
-            if self.lastSegmentIndex == self.segmentControl.selectedSegmentIndex {
-                return cfc
-            }
+            return cfc
         }
-        self.lastSegmentIndex = self.segmentControl.selectedSegmentIndex
         var fetchRequest = NSFetchRequest()
         self.tempContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
         self.tempContext!.parentContext = Storage.sharedInstance.currentContext
-        fetchRequest.entity = NSEntityDescription.entityForName("BatchTopics", inManagedObjectContext: self.tempContext!)
+        fetchRequest.entity = NSEntityDescription.entityForName(NSStringFromClass(BatchTopics), inManagedObjectContext: self.tempContext!)
         fetchRequest.fetchBatchSize = 20
-        var sortDescriptor : NSSortDescriptor?
-        switch (self.lastSegmentIndex) {
-        case 0: //Category
-            sortDescriptor = NSSortDescriptor(key: "topicCategories", ascending: true)
-        case 1: //Source
-            sortDescriptor = NSSortDescriptor(key: "topicSource", ascending: true)
-        case 2: //Date Added
-            sortDescriptor = NSSortDescriptor(key: "batchDate", ascending: false)
-        default:
-            sortDescriptor = nil
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "question", ascending: true)]
+
+        switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
+        case .ByCategory:
+            fetchRequest.sortDescriptors!.insert(NSSortDescriptor(key: "topicCategories", ascending: true), atIndex: 0)
+        case .BySource:
+            fetchRequest.sortDescriptors!.insert(NSSortDescriptor(key: "topicSource", ascending: true), atIndex: 0)
+        default: ()
         }
-        if let sd = sortDescriptor {
-            fetchRequest.sortDescriptors = [
-                sd,
-                NSSortDescriptor(key: "question", ascending: true)
-            ]
-        }
+        
         var fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.tempContext!, sectionNameKeyPath: nil, cacheName: nil)
         var error : NSError?
-        if fetchedResultsController.performFetch(&error) == false {
+        if !fetchedResultsController.performFetch(&error) {
             abort() //fetch failed
         }
         self.currentFetchController = fetchedResultsController
@@ -74,39 +70,95 @@ class TMTopicMasterTableViewController: UITableViewController {
     
     //MARK: UITableViewController
     
+    
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        var entity : (String, NSSortDescriptor)
+        var predicate : NSPredicate? //TODO: Leave for when search bar is added
+        switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
+        case .ByTopic:
+            return 1
+        case .ByCategory:
+            entity = (NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true))
+        case .BySource:
+            entity = (NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true))
+        default:
+            return 0
+        }
+        
+        let context = Storage.sharedInstance.currentContext //TODO: This returns the maincontext, I feel like this should be a temp context once I start allowing customizations ie "playlists"
+        return Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).sections!.first!.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let s =  Storage.sharedInstance.fetchAllTopics().sections as? [NSFetchedResultsSectionInfo] {
-            return s[section].numberOfObjects
+        var numberOfRowsInSection : Int = 0
+        let context = Storage.sharedInstance.currentContext //TODO: This returns the maincontext, I feel like this should be a temp context once I start allowing customizations ie "playlists"
+        var entity : (String, NSSortDescriptor)
+        var predicate : NSPredicate? //TODO: Leave for when search bar is added
+        switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
+        case .ByTopic:
+            entity = (NSStringFromClass(BatchTopics), NSSortDescriptor(key: "question", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [BatchTopics] {
+                numberOfRowsInSection = fetched.count
+            }
+        case .ByCategory:
+            entity = (NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicCategories] {
+                numberOfRowsInSection = fetched[section].batchTopics.count
+            }
+        case .BySource:
+            entity = (NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicSource] {
+                numberOfRowsInSection = fetched[section].batchTopics.count
+            }
+        default: ()
         }
-        return 0;
+        return numberOfRowsInSection
     }
-    
+    //TODO: Add the auto resizing tableview cell based on content feature
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
-        var topic = fetchTopics().objectAtIndexPath(indexPath) as BatchTopics
+        
+        var offset = rowOffset(tableView, section: indexPath.section) 
+        
+        var topic = fetchTopics().objectAtIndexPath(NSIndexPath(forRow: indexPath.row + offset, inSection: 0)) as BatchTopics
         cell.textLabel?.text = topic.question
         cell.detailTextLabel?.text = "\(topic.topicSource.source) : \(topic.topicCategories.categories)"
         return cell;
     }
+    
+    func rowOffset(tableView: UITableView, section: Int) -> Int {
+        if section == 0 {
+            return 0
+        }
+        return tableView.numberOfRowsInSection(section - 1) + rowOffset(tableView, section: (section - 1))
+    }
+    
+    //TODO: Add Style and color to the sections to make them stand out
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title : String = ""
+        let context = Storage.sharedInstance.currentContext //TODO: This returns the maincontext, I feel like this should be a temp context once I start allowing customizations ie "playlists"
+        var entity : (String, NSSortDescriptor)
+        var predicate : NSPredicate? = nil
+        switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
+        
+        case .ByCategory:
+            entity = (NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicCategories] {
+                title = "\(fetched[section].categories) (\(fetched[section].batchTopics.count) total)"
+            }
+        case .BySource:
+            entity = (NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicSource] {
+                title = "\(fetched[section].source) (\(fetched[section].batchTopics.count) total)"
+            }
+        case .ByTopic: fallthrough
+        default:
+            entity = (NSStringFromClass(BatchTopics), NSSortDescriptor(key: "question", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [BatchTopics] {
+                title = "All Topics (\(fetched.count) total)"
+            }
+        }
+        return title
+    }
 }
-
-//class TMTopicDetailTableViewController : UITableViewController {
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateAvailable", name: StorageUpdatedNotification, object: nil)
-//    }
-//    
-//    deinit {
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: StorageUpdatedNotification, object: nil)
-//    }
-//    
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        return 1
-//    }
-//    
-//    
-//}
