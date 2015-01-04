@@ -14,6 +14,7 @@
 		7FA7CA0C1A10153500DEE3E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0B1A10153500DEE3E0 /* Images.xcassets */; };
 		7FA7CA0F1A10153500DEE3E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7CA0D1A10153500DEE3E0 /* LaunchScreen.xib */; };
 		7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */; };
+		7FBFA93F1A58B01D0056C421 /* TMTopicInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBFA93E1A58B01D0056C421 /* TMTopicInterface.swift */; };
 		7FD7C2121A22987A00A62847 /* DummySecondLevelXML1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */; };
 		7FE68E571A54C27800869C53 /* TMTopicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE68E561A54C27800869C53 /* TMTopicTableViewController.swift */; };
 		7FEB45491A532F420036B9C1 /* DummyFirstLevelPList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */; };
@@ -51,6 +52,7 @@
 		7FA7CA241A10186400DEE3E0 /* TMTopicTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TMTopicTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		7FA7CA251A10186500DEE3E0 /* TMNetworkInterfaceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterfaceTest.swift; sourceTree = "<group>"; };
 		7FA7CA281A1018F600DEE3E0 /* TMNetworkInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMNetworkInterface.swift; sourceTree = "<group>"; };
+		7FBFA93E1A58B01D0056C421 /* TMTopicInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMTopicInterface.swift; sourceTree = "<group>"; };
 		7FD7C2111A22987A00A62847 /* DummySecondLevelXML1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DummySecondLevelXML1.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
 		7FE68E561A54C27800869C53 /* TMTopicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMTopicTableViewController.swift; sourceTree = "<group>"; };
 		7FEB45481A532F420036B9C1 /* DummyFirstLevelPList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DummyFirstLevelPList.plist; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				7FA7CA061A10153500DEE3E0 /* ViewController.swift */,
 				7FA7CA081A10153500DEE3E0 /* Main.storyboard */,
 				7FE68E561A54C27800869C53 /* TMTopicTableViewController.swift */,
+				7FBFA93E1A58B01D0056C421 /* TMTopicInterface.swift */,
 				7FA7CA0B1A10153500DEE3E0 /* Images.xcassets */,
 				7FA7CA0D1A10153500DEE3E0 /* LaunchScreen.xib */,
 				7FA7CA021A10153500DEE3E0 /* Supporting Files */,
@@ -295,6 +298,7 @@
 				7FEB455D1A537E180036B9C1 /* BatchDate.swift in Sources */,
 				7FEB455B1A537E180036B9C1 /* BatchTopics.swift in Sources */,
 				7FA7CA291A1018F600DEE3E0 /* TMNetworkInterface.swift in Sources */,
+				7FBFA93F1A58B01D0056C421 /* TMTopicInterface.swift in Sources */,
 				7FEB45611A537E190036B9C1 /* TopicCategories.swift in Sources */,
 				7FA7CA071A10153500DEE3E0 /* ViewController.swift in Sources */,
 				7FEB455F1A537E180036B9C1 /* TopicSource.swift in Sources */,
