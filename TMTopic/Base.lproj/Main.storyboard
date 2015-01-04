@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" directionalLockEnabled="YES" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uvt-LK-puB">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uvt-LK-puB">
                                 <rect key="frame" x="30" y="50" width="260" height="400"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4BB-W4-eQn">
@@ -117,15 +117,19 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.11304856056387935" green="0.35594531421552233" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="4BB-W4-eQn" secondAttribute="bottom" constant="-50" id="1m5-pc-W2M"/>
+                                    <constraint firstAttribute="trailing" secondItem="4BB-W4-eQn" secondAttribute="trailing" constant="-50" id="7pl-OI-M1C"/>
                                     <constraint firstAttribute="height" secondItem="t9R-4C-isa" secondAttribute="height" multiplier="1/0.65" id="889-Hk-AbU"/>
                                     <constraint firstAttribute="centerY" secondItem="4BB-W4-eQn" secondAttribute="centerY" id="8KN-F6-bDx"/>
                                     <constraint firstAttribute="width" secondItem="t9R-4C-isa" secondAttribute="width" id="CZh-P2-XoM"/>
                                     <constraint firstAttribute="height" secondItem="YSg-et-Qaz" secondAttribute="height" multiplier="1/0.1" id="Etf-2f-9AS"/>
                                     <constraint firstItem="4BB-W4-eQn" firstAttribute="width" secondItem="uvt-LK-puB" secondAttribute="width" constant="100" id="IPf-Cu-R00"/>
+                                    <constraint firstItem="4BB-W4-eQn" firstAttribute="leading" secondItem="uvt-LK-puB" secondAttribute="leading" constant="-50" id="Pdg-df-h4M"/>
                                     <constraint firstAttribute="width" secondItem="YSg-et-Qaz" secondAttribute="width" id="YU2-LX-xeJ"/>
                                     <constraint firstItem="4BB-W4-eQn" firstAttribute="height" secondItem="uvt-LK-puB" secondAttribute="height" constant="100" id="b3J-E6-O3L"/>
                                     <constraint firstAttribute="centerX" secondItem="4BB-W4-eQn" secondAttribute="centerX" id="eaZ-os-4Lb"/>
                                     <constraint firstAttribute="height" secondItem="nti-mb-HWx" secondAttribute="height" multiplier="1/0.25" id="fWU-e7-uns"/>
+                                    <constraint firstItem="4BB-W4-eQn" firstAttribute="top" secondItem="uvt-LK-puB" secondAttribute="top" constant="-50" id="gJa-sH-pbn"/>
                                     <constraint firstAttribute="width" secondItem="nti-mb-HWx" secondAttribute="width" id="yHE-5d-tbq"/>
                                 </constraints>
                                 <connections>
