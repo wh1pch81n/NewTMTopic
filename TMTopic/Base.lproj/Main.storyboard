@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="brB-C4-wED">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -39,6 +40,28 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4BB-W4-eQn">
                                         <rect key="frame" x="-50" y="-50" width="360" height="500"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="nti-mb-HWx" userLabel="Intro">
+                                                <rect key="frame" x="50" y="50" width="260" height="100"/>
+                                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="22"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="t9R-4C-isa" userLabel="Question">
+                                                <rect key="frame" x="50" y="150" width="260" height="260"/>
+                                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Source:" translatesAutoresizingMaskIntoConstraints="NO" id="YSg-et-Qaz" userLabel="Source">
+                                                <rect key="frame" x="50" y="410" width="260" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGl-Ec-Ymf" userLabel="Left_prev">
                                                 <rect key="frame" x="0.0" y="225" width="50" height="50"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,22 +98,35 @@
                                         <color key="backgroundColor" red="1" green="0.23233636341449504" blue="0.26415116167235542" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="EdO-bA-wFj" secondAttribute="bottom" id="242-sx-7iH"/>
+                                            <constraint firstItem="t9R-4C-isa" firstAttribute="top" secondItem="nti-mb-HWx" secondAttribute="bottom" id="3IM-4G-Zf6"/>
                                             <constraint firstAttribute="centerY" secondItem="3vx-BX-rkc" secondAttribute="centerY" id="5Bw-S3-yBY"/>
                                             <constraint firstAttribute="trailing" secondItem="3vx-BX-rkc" secondAttribute="trailing" id="8uQ-Hb-C0r"/>
+                                            <constraint firstAttribute="centerX" secondItem="YSg-et-Qaz" secondAttribute="centerX" id="CUV-Il-4fi"/>
+                                            <constraint firstItem="t9R-4C-isa" firstAttribute="bottom" secondItem="YSg-et-Qaz" secondAttribute="top" id="HZI-rC-5wa"/>
+                                            <constraint firstAttribute="centerX" secondItem="t9R-4C-isa" secondAttribute="centerX" id="KrC-zs-zLj"/>
                                             <constraint firstItem="tXb-cY-etZ" firstAttribute="top" secondItem="4BB-W4-eQn" secondAttribute="top" id="Rg6-qM-joX"/>
                                             <constraint firstAttribute="centerY" secondItem="NGl-Ec-Ymf" secondAttribute="centerY" id="XAA-m0-CmO"/>
                                             <constraint firstAttribute="centerX" secondItem="EdO-bA-wFj" secondAttribute="centerX" id="cDH-vt-7zH"/>
                                             <constraint firstAttribute="centerX" secondItem="tXb-cY-etZ" secondAttribute="centerX" id="cY1-zr-CvA"/>
+                                            <constraint firstAttribute="bottom" secondItem="YSg-et-Qaz" secondAttribute="bottom" constant="50" id="ca4-DP-3E4"/>
+                                            <constraint firstItem="nti-mb-HWx" firstAttribute="top" secondItem="4BB-W4-eQn" secondAttribute="top" constant="50" id="eGq-rA-nIY"/>
                                             <constraint firstItem="NGl-Ec-Ymf" firstAttribute="leading" secondItem="4BB-W4-eQn" secondAttribute="leading" id="eGx-tM-CnP"/>
+                                            <constraint firstAttribute="centerX" secondItem="nti-mb-HWx" secondAttribute="centerX" id="giW-66-Q6X"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.11304856056387935" green="0.35594531421552233" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" secondItem="t9R-4C-isa" secondAttribute="height" multiplier="1/0.65" id="889-Hk-AbU"/>
                                     <constraint firstAttribute="centerY" secondItem="4BB-W4-eQn" secondAttribute="centerY" id="8KN-F6-bDx"/>
+                                    <constraint firstAttribute="width" secondItem="t9R-4C-isa" secondAttribute="width" id="CZh-P2-XoM"/>
+                                    <constraint firstAttribute="height" secondItem="YSg-et-Qaz" secondAttribute="height" multiplier="1/0.1" id="Etf-2f-9AS"/>
                                     <constraint firstItem="4BB-W4-eQn" firstAttribute="width" secondItem="uvt-LK-puB" secondAttribute="width" constant="100" id="IPf-Cu-R00"/>
+                                    <constraint firstAttribute="width" secondItem="YSg-et-Qaz" secondAttribute="width" id="YU2-LX-xeJ"/>
                                     <constraint firstItem="4BB-W4-eQn" firstAttribute="height" secondItem="uvt-LK-puB" secondAttribute="height" constant="100" id="b3J-E6-O3L"/>
                                     <constraint firstAttribute="centerX" secondItem="4BB-W4-eQn" secondAttribute="centerX" id="eaZ-os-4Lb"/>
+                                    <constraint firstAttribute="height" secondItem="nti-mb-HWx" secondAttribute="height" multiplier="1/0.25" id="fWU-e7-uns"/>
+                                    <constraint firstAttribute="width" secondItem="nti-mb-HWx" secondAttribute="width" id="yHE-5d-tbq"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="brB-C4-wED" id="TZi-Mz-YfU"/>
