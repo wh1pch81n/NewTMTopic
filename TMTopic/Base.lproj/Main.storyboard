@@ -58,7 +58,7 @@
                                                 <rect key="frame" x="50" y="410" width="260" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="9"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                             </textView>
@@ -178,7 +178,10 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="introLabel" destination="nti-mb-HWx" id="ZTU-3R-RMi"/>
+                        <outlet property="questionLabel" destination="t9R-4C-isa" id="k1o-Lg-ZxT"/>
                         <outlet property="scrollView" destination="uvt-LK-puB" id="UBY-hi-IiD"/>
+                        <outlet property="sourceTextView" destination="YSg-et-Qaz" id="6Pa-In-zn6"/>
                         <outlet property="topicView" destination="4BB-W4-eQn" id="Avj-2M-Zcn"/>
                     </connections>
                 </viewController>
