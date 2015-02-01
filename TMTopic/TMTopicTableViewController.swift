@@ -47,15 +47,15 @@ class TMTopicMasterTableViewController: UITableViewController {
         var fetchRequest = NSFetchRequest()
         self.tempContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
         self.tempContext!.parentContext = Storage.sharedInstance.currentContext
-        fetchRequest.entity = NSEntityDescription.entityForName(NSStringFromClass(BatchTopics), inManagedObjectContext: self.tempContext!)
+        fetchRequest.entity = NSEntityDescription.entityForName(NSStringFromClass(Topics), inManagedObjectContext: self.tempContext!)
         fetchRequest.fetchBatchSize = 20
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "question", ascending: true)]
 
         switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
         case .ByCategory:
-            fetchRequest.sortDescriptors!.insert(NSSortDescriptor(key: "topicCategories", ascending: true), atIndex: 0)
+            fetchRequest.sortDescriptors!.insert(NSSortDescriptor(key: "Category", ascending: true), atIndex: 0)
         case .BySource:
-            fetchRequest.sortDescriptors!.insert(NSSortDescriptor(key: "topicSource", ascending: true), atIndex: 0)
+            fetchRequest.sortDescriptors!.insert(NSSortDescriptor(key: "Source", ascending: true), atIndex: 0)
         default: ()
         }
         
@@ -79,9 +79,9 @@ class TMTopicMasterTableViewController: UITableViewController {
         case .ByTopic:
             return 1
         case .ByCategory:
-            entity = (NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true))
+            entity = (NSStringFromClass(Category), NSSortDescriptor(key: "category", ascending: true))
         case .BySource:
-            entity = (NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true))
+            entity = (NSStringFromClass(Source), NSSortDescriptor(key: "source", ascending: true))
         default:
             return 0
         }
@@ -97,19 +97,19 @@ class TMTopicMasterTableViewController: UITableViewController {
         var predicate : NSPredicate? //TODO: Leave for when search bar is added
         switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
         case .ByTopic:
-            entity = (NSStringFromClass(BatchTopics), NSSortDescriptor(key: "question", ascending: true))
-            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [BatchTopics] {
+            entity = (NSStringFromClass(Topics), NSSortDescriptor(key: "question", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [Topics] {
                 numberOfRowsInSection = fetched.count
             }
         case .ByCategory:
-            entity = (NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true))
-            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicCategories] {
-                numberOfRowsInSection = fetched[section].batchTopics.count
+            entity = (NSStringFromClass(Category), NSSortDescriptor(key: "category", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [Category] {
+                numberOfRowsInSection = fetched[section].topics.count
             }
         case .BySource:
-            entity = (NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true))
-            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicSource] {
-                numberOfRowsInSection = fetched[section].batchTopics.count
+            entity = (NSStringFromClass(Source), NSSortDescriptor(key: "source", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [Source] {
+                numberOfRowsInSection = fetched[section].topics.count
             }
         default: ()
         }
@@ -121,9 +121,9 @@ class TMTopicMasterTableViewController: UITableViewController {
         
         var offset = rowOffset(tableView, section: indexPath.section) 
         
-        var topic = fetchTopics().objectAtIndexPath(NSIndexPath(forRow: indexPath.row + offset, inSection: 0)) as BatchTopics
+        var topic = fetchTopics().objectAtIndexPath(NSIndexPath(forRow: indexPath.row + offset, inSection: 0)) as Topics
         cell.textLabel?.text = topic.question
-        cell.detailTextLabel?.text = "\(topic.topicSource.source) : \(topic.topicCategories.categories)"
+        cell.detailTextLabel?.text = "\(topic.source.source) : \(topic.category.category)"
         return cell;
     }
     
@@ -143,19 +143,19 @@ class TMTopicMasterTableViewController: UITableViewController {
         switch TMTopicFilter(rawValue: self.segmentControl.selectedSegmentIndex)! {
         
         case .ByCategory:
-            entity = (NSStringFromClass(TopicCategories), NSSortDescriptor(key: "categories", ascending: true))
-            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicCategories] {
-                title = "\(fetched[section].categories) (\(fetched[section].batchTopics.count) total)"
+            entity = (NSStringFromClass(Category), NSSortDescriptor(key: "category", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [Category] {
+                title = "\(fetched[section].category) (\(fetched[section].topics.count) total)"
             }
         case .BySource:
-            entity = (NSStringFromClass(TopicSource), NSSortDescriptor(key: "source", ascending: true))
-            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [TopicSource] {
-                title = "\(fetched[section].source) (\(fetched[section].batchTopics.count) total)"
+            entity = (NSStringFromClass(Source), NSSortDescriptor(key: "source", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [Source] {
+                title = "\(fetched[section].source) (\(fetched[section].topics.count) total)"
             }
         case .ByTopic: fallthrough
         default:
-            entity = (NSStringFromClass(BatchTopics), NSSortDescriptor(key: "question", ascending: true))
-            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [BatchTopics] {
+            entity = (NSStringFromClass(Topics), NSSortDescriptor(key: "question", ascending: true))
+            if let fetched = Storage.sharedInstance.fetchEntity(entity, predicate: predicate, context: context).fetchedObjects as? [Topics] {
                 title = "All Topics (\(fetched.count) total)"
             }
         }

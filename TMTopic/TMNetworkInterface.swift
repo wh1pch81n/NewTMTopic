@@ -8,48 +8,68 @@
 
 import Foundation
 
-public let TMNetworkInterfaceDidFetchNotification = "TMNetworkInterfaceDidFetchNotification"
-
 private let _firstLevelBatchPListURL = "https://raw.githubusercontent.com/wh1pch81n/NewTMTopic_Data/master/firstLevelBatch.plist"
-private let _TMNetworkInterfaceSingletonInstance = TMNetworkInterface()
 
+@objc protocol TMNetworkInterfaceDelegate {
+    func currentBatches(batches : NSArray)
+    func requestedTopics(topics : NSArray, batchIndex : Int, batchDate : String)
+    
+    func errorGettingBatches(error : NSError)
+    func errorGettingTopics(error : NSError)
+}
+
+private let _TMNetworkInterfaceSingletonInstance = TMNetworkInterface()
 class TMNetworkInterface : NSObject {
     class var sharedInstance : TMNetworkInterface {
         return _TMNetworkInterfaceSingletonInstance
     }
     
+    var delegate : TMNetworkInterfaceDelegate?
     var urlSession = NSURLSession.sharedSession()
     var notificationCenter = NSNotificationCenter.defaultCenter()
+    private var _batches : NSArray?
     
-    func checkForUpdate() {
+    func checkForBatchUpdate() {
         self.urlSession.dataTaskWithURL(NSURL(string: _firstLevelBatchPListURL)!, completionHandler: { (data : NSData!, response: NSURLResponse!, error : NSError!) -> Void in
             if error != nil {
                 return
             }
-            var batch = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil) as? NSArray
-            if let b = batch {
-                for i in b {
-                    var batchURL = i["batchUrl"] as NSString
-                    self.urlSession.dataTaskWithURL(NSURL(string: batchURL)!, completionHandler: { (data, response, error) -> Void in
-                        if error != nil {
-                            return;
-                        }
-                        var topics = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil) as? NSArray
-                        if let a = topics {
-                            var d = NSMutableDictionary()
-                            d["batchDate"] = i["batchDate"]
-                            d["topics"] = a
-                            self.notificationCenter.postNotificationName(TMNetworkInterfaceDidFetchNotification, object: self, userInfo: d)
-                        }
-                    }).resume()
+            var batches = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil) as? NSArray
+            if let b = batches {
+                self._batches = b
+                let d = self.delegate
+                if (d != nil) {
+                    d!.currentBatches(b)
+                } else {
+                    var err = NSError()
+                    d!.errorGettingTopics(err)
                 }
             }
-            
-            //for each date in array go to each url and get its topic
-            ////for each topic send a notification with the topic - date pair /*the listener should decide if it should save these values or not*/
         }).resume()
-        
     }
     
-    //TODO: make a checkForUpdate that will only send a notification if there is a need to go past the first level.
+    func getTopicsForBatch(batchIndex : Int) {
+        if let b = _batches {
+            var batch = b[batchIndex] as NSDictionary
+            self.urlSession.dataTaskWithURL(
+                NSURL(string: batch["batchUrl"] as String)!,
+                completionHandler: { (data, response, error) -> Void in
+                    if error != nil {
+                        return;
+                    }
+                    var topics = NSPropertyListSerialization.propertyListWithData(data, options: NSPropertyListReadOptions(), format: nil, error: nil) as? NSArray
+                    if let t = topics {
+                        let delegate = self.delegate
+                        if delegate != nil {
+                            var batchIndex = batch["batchIndex"] as Int
+                            var batchDate = batch["batchDate"] as String
+                            delegate?.requestedTopics(t, batchIndex:batchIndex, batchDate:batchDate)
+                        } else {
+                            var err = NSError()
+                            delegate!.errorGettingTopics(err)
+                        }
+                    }
+            }).resume()
+        }
+    }
 }

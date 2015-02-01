@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="BatchDate" representedClassName="BatchDate" syncable="YES">
+    <entity name="Batch" representedClassName="Batch" syncable="YES">
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="batchTopics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BatchTopics" inverseName="batchDate" inverseEntity="BatchTopics" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Topics" inverseName="batch" inverseEntity="Topics" syncable="YES"/>
     </entity>
-    <entity name="BatchTopics" representedClassName="BatchTopics" syncable="YES">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String" defaultValueString="Miscellaneous" syncable="YES"/>
+        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Topics" inverseName="category" inverseEntity="Topics" syncable="YES"/>
+    </entity>
+    <entity name="List" representedClassName="List" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Topics" inverseName="list" inverseEntity="Topics" syncable="YES"/>
+    </entity>
+    <entity name="Source" representedClassName="Source" syncable="YES">
+        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Topics" inverseName="source" inverseEntity="Topics" syncable="YES"/>
+    </entity>
+    <entity name="Topics" representedClassName="Topics" syncable="YES">
         <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="max" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="60" defaultValueString="3" syncable="YES"/>
         <attribute name="min" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="59" defaultValueString="2" syncable="YES"/>
         <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="batchDate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BatchDate" inverseName="batchTopics" inverseEntity="BatchDate" syncable="YES"/>
-        <relationship name="topicCategories" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TopicCategories" inverseName="batchTopics" inverseEntity="TopicCategories" syncable="YES"/>
-        <relationship name="topicSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TopicSource" inverseName="batchTopics" inverseEntity="TopicSource" syncable="YES"/>
-    </entity>
-    <entity name="TopicCategories" representedClassName="TopicCategories" syncable="YES">
-        <attribute name="categories" optional="YES" attributeType="String" defaultValueString="Miscellaneous" syncable="YES"/>
-        <relationship name="batchTopics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BatchTopics" inverseName="topicCategories" inverseEntity="BatchTopics" syncable="YES"/>
-    </entity>
-    <entity name="TopicSource" representedClassName="TopicSource" syncable="YES">
-        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="batchTopics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BatchTopics" inverseName="topicSource" inverseEntity="BatchTopics" syncable="YES"/>
+        <relationship name="batch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Batch" inverseName="topics" inverseEntity="Batch" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="topics" inverseEntity="Category" syncable="YES"/>
+        <relationship name="list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="topics" inverseEntity="List" syncable="YES"/>
+        <relationship name="source" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Source" inverseName="topics" inverseEntity="Source" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BatchDate" positionX="-191" positionY="-261" width="128" height="73"/>
-        <element name="BatchTopics" positionX="-18" positionY="-306" width="128" height="148"/>
-        <element name="TopicCategories" positionX="144" positionY="-306" width="128" height="73"/>
-        <element name="TopicSource" positionX="144" positionY="-171" width="128" height="73"/>
+        <element name="Batch" positionX="-191" positionY="-261" width="128" height="88"/>
+        <element name="Topics" positionX="-18" positionY="-306" width="128" height="163"/>
+        <element name="Category" positionX="144" positionY="-306" width="128" height="73"/>
+        <element name="Source" positionX="144" positionY="-171" width="128" height="73"/>
+        <element name="List" positionX="-11" positionY="-495" width="128" height="73"/>
     </elements>
 </model>

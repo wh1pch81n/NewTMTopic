@@ -36,7 +36,7 @@ class TMTopicInterface: UIViewController, UIScrollViewDelegate, NSFetchedResults
             }
             var context = Storage.sharedInstance.currentContext
             var fetchedResults = NSFetchRequest()
-            fetchedResults.entity = NSEntityDescription.entityForName(NSStringFromClass(BatchTopics), inManagedObjectContext: context)
+            fetchedResults.entity = NSEntityDescription.entityForName(NSStringFromClass(Topics), inManagedObjectContext: context)
             fetchedResults.fetchBatchSize = 20
             fetchedResults.sortDescriptors = [NSSortDescriptor(key: "question", ascending: true)]
 //            fetchedResults.predicate //TODO: Only include the ones that are Marked in inclusion
@@ -53,6 +53,8 @@ class TMTopicInterface: UIViewController, UIScrollViewDelegate, NSFetchedResults
     override func viewDidLoad() {
         scrollView.layer.masksToBounds = true
         scrollView.clipsToBounds = false
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "chooseAction:", name: StorageUpdatedNotification, object: nil)
         chooseAction(TMTopicInterfaceOptions.Random)
     }
     
@@ -92,9 +94,17 @@ class TMTopicInterface: UIViewController, UIScrollViewDelegate, NSFetchedResults
         }
     }
     
+    func chooseAction(notification : NSNotification) {
+        chooseAction(TMTopicInterfaceOptions.NoOp)
+    }
+    
     func chooseAction(action : TMTopicInterfaceOptions) {
-        var topics = fetchedTopics.fetchedObjects as [BatchTopics]
+        var topics = fetchedTopics.fetchedObjects as [Topics]
         currentLotteryMax = topics.count
+        if (currentLotteryMax < 1) {
+            updateUI("", question: "", category: "", source: "")
+            return
+        }
         switch action {
         case .Next: currentIndex = (++currentIndex) % currentLotteryMax
         case .Prev: currentIndex = (--currentIndex + currentLotteryMax) % currentLotteryMax
@@ -104,7 +114,7 @@ class TMTopicInterface: UIViewController, UIScrollViewDelegate, NSFetchedResults
             ()
         }
         let topic = topics[currentIndex]
-        updateUI(topic.intro, question: topic.question, category: topic.topicCategories.categories, source: topic.topicSource.source)
+        updateUI(topic.intro, question: topic.question, category: topic.category.category, source: topic.source.source)
     }
     
     func updateUI(intro: String, question: String, category: String, source: String) {
